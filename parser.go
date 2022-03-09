@@ -18,8 +18,6 @@ func Parse(input string) bool {
 			if c == pair.open {
 				stack = append(stack, c)
 			}
-		}
-		for _, pair := range pairs {
 			if c == pair.close {
 				// Check if previous opened matches this closed pair.
 				if stack[len(stack)-1] != pair.open {
