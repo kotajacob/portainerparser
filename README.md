@@ -1,4 +1,4 @@
 ```sh
 git clone https://github.com/kotajacob/portainerparser
-go test
+go test -v
 ```
