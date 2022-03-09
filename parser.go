@@ -1,30 +1,34 @@
 package portainerparser
 
-import "fmt"
+type pair struct {
+	open  rune
+	close rune
+}
+
+var pairs = []pair{
+	{open: '(', close: ')'},
+	{open: '{', close: '}'},
+	{open: '[', close: ']'},
+}
 
 func Parse(input string) bool {
 	var stack []rune
 	for _, c := range input {
-		switch c {
-		case '(', '{', '[':
-			stack = append(stack, c)
-		case ')':
-			if stack[len(stack)-1] != '(' {
-				return false
+		for _, pair := range pairs {
+			if c == pair.open {
+				stack = append(stack, c)
 			}
-			stack = stack[:len(stack)-1]
-		case '}':
-			if stack[len(stack)-1] != '{' {
-				return false
-			}
-			stack = stack[:len(stack)-1]
-		case ']':
-			if stack[len(stack)-1] != '[' {
-				return false
-			}
-			stack = stack[:len(stack)-1]
 		}
-		fmt.Println(stack)
+		for _, pair := range pairs {
+			if c == pair.close {
+				// Check if previous opened matches this closed pair.
+				if stack[len(stack)-1] != pair.open {
+					return false
+				}
+				// Remove from stack on success.
+				stack = stack[:len(stack)-1]
+			}
+		}
 	}
 	return true
 }
