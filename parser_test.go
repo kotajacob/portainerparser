@@ -27,6 +27,10 @@ func TestParse(t *testing.T) {
 			"(){}()",
 			true,
 		},
+		{
+			"][",
+			false,
+		},
 	}
 
 	for _, test := range tests {
